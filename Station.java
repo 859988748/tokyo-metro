@@ -37,7 +37,10 @@ public class Station {
 	}
 	
 	public Node setNode(int arriveTime, int routeId, int tripId){
-		long key = arriveTime * 50000 + tripId;
+		long key = arriveTime * 5000 + tripId;
+		if(key < 0){
+			System.err.println(""+key);
+		}
 		Node node = nodeMap.get(key);
 		if(node == null){
 			node = new Node(this, arriveTime, routeId, tripId);
@@ -76,6 +79,9 @@ public class Station {
 		}
 		for (int i = 0; i < nodes.length; i++) {
 			Node from = nodes[i];
+			if(name.equals("三鹰") && i == 30){
+				System.err.println("stop");
+			}
 			for (int route : routes) {
 				int trans = getTransTime(from.getRouteId(), route);
 				for (int j = 0; j < nodes.length; j++) {

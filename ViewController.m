@@ -22,6 +22,9 @@
 +(int)getTime:(NSString *)time{
     NSArray * item = [time componentsSeparatedByString:@":"];
     int t = (int)([item[0] integerValue] * 3600 + [item[1] integerValue] * 60 + [item[2] integerValue]);
+    if (t < 0) {
+        NSLog(@"%d",t);
+    }
     return t;
 }
 +(BOOL)addList:(NSMutableArray *)list Path:(NSArray *)paht{
@@ -148,7 +151,7 @@
     Node * startNode = nil;
     for (int i = 0 ; i < startS.getNodeCount; i++) {
         Node * n = [startS getNode:i];
-        if (n.time >= t && n.routeId ==  routeId) {
+        if (n.time >= t && n.routeId == routeId) {
             startNode = n;
             NSLog(@"filtered Start Node:%@",[startNode toString]);
             break;
@@ -170,6 +173,10 @@
             continue;
         }
         nodeCount++;
+        if (nodeCount > 5) {
+            break;
+        }
+        [endNode backVisit];
         int count = 0;
         for (Station *s in stations) {
             for (int i = 0;  i < s.getNodeCount; i ++) {

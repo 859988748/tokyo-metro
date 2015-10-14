@@ -210,10 +210,12 @@ public class Metro {
 		}
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			System.err.println("startNode:"+m.stations[0].getNode(30).getStation().getName());
+			System.err.println("EndStation:"+m.stations[212].getName());
 			long t = System.currentTimeMillis();
 			tabPane.removeAll();
-//			Node[][] path = m.getBestPath("代代木", "9:4:0", 154, "日比谷", 10);
-			Node[][] path = m.getBestPath(m.stations[0].getNode(30), m.stations[212], 10);
+			Node[][] path = m.getBestPath("代代木", "9:4:0", 154, "日比谷", 10);
+//			Node[][] path = m.getBestPath(m.stations[0].getNode(30), m.stations[212], 10);
 //			Node[][] path = m.getBestPath(m.stations[20].getNode(0), m.stations[212], 10);
 			System.err.println("算法耗时:"+(System.currentTimeMillis() - t));
 			for(int i = 0;i<path.length;i++){

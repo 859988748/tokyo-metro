@@ -29,11 +29,14 @@
     return  self;
 }
 -(Node *)setNodeArriveTime:(int)arriveTime routId:(int)routeId tripId:(int)tripId{
-    long key = arriveTime * 50000 + tripId;
-    Node * node  = [_nodeMap objectForKey:[NSNumber numberWithLong:key]];
+    long long key = arriveTime * 5000 + tripId;
+    if (key < 0) {
+        NSLog(@"%l",key);
+    }
+    Node * node  = [_nodeMap objectForKey:[NSNumber numberWithLongLong:key]];
     if (node == nil) {
         node = [[Node alloc] initWithStationg:self Time:arriveTime routeId:routeId tripId:tripId];
-        [_nodeMap setObject:node forKey:[NSNumber numberWithLong:key]];
+        [_nodeMap setObject:node forKey:[NSNumber numberWithLongLong:key]];
     }
     return node;
 }
@@ -52,8 +55,8 @@
 -(void)selfLink{
     NSArray * keys = [_nodeMap allKeys];
     NSArray * sortedKeys = [keys sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        long key1 = [obj1 longValue];
-        long key2 = [obj1 longValue];
+        long long key1 = [obj1 longLongValue];
+        long long key2 = [obj2 longLongValue];
         if (key1 > key2) {
             return NSOrderedDescending;
         }
@@ -81,11 +84,11 @@
         }
         return NSOrderedSame;
     }];
-    if ([_name isEqualToString:@"大手町"]) {
-        NSLog(@"大手町routs count:%lu",(unsigned long)[routes count]);
-    }
     for (int i = 0 ; i < _nodes.count; i ++) {
         Node * from = _nodes[i];
+        if ([_name isEqualToString:@"三鹰"] && i == 30) {
+            NSLog(@"stop");
+        }
         for (NSNumber * routNumber in routes) {
             int rout = [routNumber intValue];
             int trans = [self getTransTimeFrom:from.routeId To:rout];

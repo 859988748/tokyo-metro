@@ -129,10 +129,10 @@ public class Node {
 			}
 			return 3;
 		} else {
-			if(node.tripId == node.tripId){
+			if(node.tripId == this.tripId){
 				return 3;
 			}
-			if(node.routeId == node.routeId){
+			if(node.routeId == this.routeId){
 				return 2;
 			}
 			return 1;

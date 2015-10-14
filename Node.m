@@ -45,7 +45,8 @@
     for (int i = 0; i<_prev.count; i++) {
         [[_prev objectAtIndex:i] backVisit];
     }
-}-(void)visit{
+}
+-(void)visit{
     if (_visited) {
         return;
     }
@@ -121,7 +122,7 @@
     for (int i = 0; i < _next.count; i ++) {
         Node *p = _next[i];
         if (p.backVisited) {
-            if ([self getPriorityForNode:best Trans:trans]) {
+            if ([self getPriorityForNode:best Trans:trans] < [self getPriorityForNode:p Trans:trans]) {
                 best = p;
             }
         }
@@ -153,10 +154,10 @@
         }
         return 3;
     }else{
-        if (node.tripId == node.tripId) {
+        if (node.tripId == self.tripId) {
             return 3;
         }
-        if (node.routeId == node.routeId) {
+        if (node.routeId == self.routeId) {
             return 2;
         }
         return 1;
@@ -201,5 +202,8 @@
 }
 -(NSString *)toString{
     return [NSString stringWithFormat:@"%@,%@,%@,%d号线（班次%d)",_station.stationId,_station.name,[self getTimeStr],_routeId,_tripId];
+}
+- (NSString *)description{
+    return [self toString];
 }
 @end
